@@ -2,11 +2,13 @@
 
 namespace App\Interfaces;
 
+
+
 interface UserRepositoryInterface
 {
-    public function showAllUsers();
-    public function showUser($id);
-    public function createUser();
-    public function updateUser($id, $data);
-    public function deleteUser($id);
+    public function all();
+    public function find($id);
+    public function create(array $data);
+    public function update(array $data, $id);
+    public function delete($id);
 }

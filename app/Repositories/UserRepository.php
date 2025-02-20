@@ -5,37 +5,38 @@ namespace App\Repositories;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 
-
 /**
  * Class UserRepository.
  */
 class UserRepository implements UserRepositoryInterface
 {
-    protected User $user;
+    protected $model;
 
-    public function __construct(User $user)
+    public function __construct(User $model)
     {
-        $this->user = $user;
+        $this->model = $model;
     }
 
-    public function showAllUsers()
+    public function all()
     {
-        return $this->user::all();
+        return $this->model->all();
     }
-    public function showUser($id)
+    public function find($id)
     {
-        return $this->user::findOrFail($id);
+        return $this->model->findOrFail($id);
     }
-    public function createUser()
+
+    public function create(array $data)
     {
-        //
+        return $this->model->create($data);
     }
-    public function updateUser($id, $data)
+    public function update(array $data, $id)
     {
-        //
+        $record = $this->model->findOrFail($id);
+        return $record->update($data);
     }
-    public function deleteUser($id)
+    public function delete($id)
     {
-        //
+        $this->model->findOrFail($id)->delete();
     }
 }

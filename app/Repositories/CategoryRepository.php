@@ -2,20 +2,38 @@
 
 namespace App\Repositories;
 
-use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
-//use Your Model
+use App\Interfaces\CategoryRepositoryInterface;
+use App\Models\Category;
 
-/**
- * Class CategoryRepository.
- */
-class CategoryRepository extends BaseRepository
+class CategoryRepository implements CategoryRepositoryInterface
 {
-    /**
-     * @return string
-     *  Return the model
-     */
-    public function model()
+    protected $model;
+
+    public function __construct(Category $model)
     {
-        //return YourModel::class;
+        $this->model = $model;
+    }
+
+    public function all()
+    {
+        return $this->model->all();
+    }
+    public function find($id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return $this->model->create($data);
+    }
+    public function update(array $data, $id)
+    {
+        $record = $this->model->findOrFail($id);
+        return $record->update($data);
+    }
+    public function delete($id)
+    {
+        $this->model->findOrFail($id)->delete();
     }
 }
